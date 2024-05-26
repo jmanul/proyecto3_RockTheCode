@@ -1,15 +1,39 @@
 
-.cardDiv {
-
-     width: 10em;
-     height:fit-content;
-     background-color: aqua;
-   
+.cardDiv  {
+     
+     padding-bottom: 1em;
+     margin-bottom: 10px;
+     cursor: pointer;
+     break-inside: avoid;
 }
 
-.cardDiv > img{
+.cardDiv > a > img{
+     max-width: 100%;
+     border-radius: 20px;
+     border: 2px solid var(--light-dark);
+}
 
-     width: 100%;
-     height: 100%;
-     border-radius: 10px;
+.cardDiv > h3 {
+
+     margin: 10px 5px;
+
+     font-family: var(--texto);
+     font-size: medium;
+     
+
+}
+
+.cardDiv h3 > a {
+       color: var(--dark-grey);
+}
+
+.cardDiv p {
+
+     font-size: 15px;
+     color: var(--light-red);
+}
+
+.cardDiv span{
+
+     margin: 0 5px;
 }

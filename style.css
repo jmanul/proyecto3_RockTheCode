@@ -12,13 +12,13 @@
 :root {
 
      --white: rgb(243, 243, 243);
-     --black: #181818;
-     --green: hsl(154, 29%, 47%);
-     --light-green: hsl(152, 27%, 37%);
-     --red: rgb(242, 201, 202);
-     --dark-grey: rgb(104, 103, 103);
-     --light-grey: rgb(248, 248, 248);
+     --light-red: rgb(219, 144, 156);
+     --red: rgb(230, 0, 35);
+     --dark: rgb(15, 15, 15);
+     --light-dark: rgb(42, 42, 42);
      --blue-grey: rgb(231, 233, 235);
+     --dark-grey: rgb(155, 150, 150);
+     --linear-gradient: (0deg, rgba(42, 42, 42, 1) 13%, rgba(17, 33, 33, 1) 56%);
      --titulo: "Roboto",
           sans-serif;
      --texto: "Maven Pro",
@@ -42,10 +42,65 @@
 }
 
 
+
+
 body {
 
      width: 100%;
      height: 100vh;
+     background-color:var(--dark) ;
 }
+
+
+
+p , h1 ,h2 ,h3 ,h4 {
+
+     color: var(--white);
+}
+
+header {
+
+     background: var(--dark);
+     position: fixed;
+     top: 0;
+     width: 100%;
+     height: 130px;
+     border-bottom:var(--light-dark) 2px solid;
+     z-index: 1;
+     gap: 0;
+    
+}
+
+
+
+
+.cards {
+
+   
+     margin: 1em;
+     padding: 5px ;
+     padding-top: 130px;
+     padding-bottom: 100px;
+     columns: 5 220px;
+     column-gap: .7em;
+  
+
+}
+
+
+
+
+
+
+@media (max-width: 510px) {
+
+     .cards {
+
+               columns: auto 160px;
+               
+          }
+};
+
+
 
 

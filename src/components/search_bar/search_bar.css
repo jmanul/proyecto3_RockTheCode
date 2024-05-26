@@ -1,0 +1,82 @@
+
+header .filterSearchDiv {
+
+     width: 50%;
+     max-width: 600px;
+     min-width: 100px;
+     gap: 0px;
+
+}
+
+
+header input {
+     cursor: pointer;
+     border: 2px solid var(--light-red);
+     padding: 0 15px;
+     border-bottom-left-radius: 25px;
+     border-top-left-radius: 25px;
+     border-right: none;
+     background: transparent;
+     width: 85%;
+     height: 40px;
+     font-family: var(--texto);
+     font-weight: 500;
+     font-size: 16px;
+     color: var(--blue-grey);
+     transition: .3s;
+
+
+     &:focus {
+          outline: none;
+
+     }
+
+
+}
+
+header button {
+
+     cursor: pointer;
+     border: 2px solid var(--light-red);
+     border-left: none;
+     background: transparent;
+     border-bottom-right-radius: 25px;
+     border-top-right-radius: 25px;
+     height: 40px;
+     width: 13%;
+     transition: .3s;
+
+     &:hover {
+
+          background-color: var(--blue-grey);
+
+     }
+
+     &:hover i {
+
+          color: var(--dark);
+     }
+
+}
+
+header .filterSearchDiv i {
+     font-size: 1.5rem;
+     color: var(--dark-grey);
+     padding: 10px;
+
+}
+
+@media (max-width: 700px) {
+
+     header button {
+
+          width: 25%;
+     }
+
+     header input {
+
+          width: 75%;
+     }
+}
+
+;
