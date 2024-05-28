@@ -1,15 +1,16 @@
 
-header .filterSearchDiv {
+.filterSearchDiv  {
 
      width: 50%;
      max-width: 600px;
      min-width: 100px;
      gap: 0px;
+  
 
 }
 
 
-header input {
+.filterSearchDiv input {
      cursor: pointer;
      border: 2px solid var(--light-red);
      padding: 0 15px;
@@ -34,7 +35,7 @@ header input {
 
 }
 
-header button {
+.filterSearchDiv button {
 
      cursor: pointer;
      border: 2px solid var(--light-red);
@@ -48,7 +49,7 @@ header button {
 
      &:hover {
 
-          background-color: var(--blue-grey);
+          background-color: var(--white);
 
      }
 
@@ -59,7 +60,7 @@ header button {
 
 }
 
-header .filterSearchDiv i {
+.filterSearchDiv i {
      font-size: 1.5rem;
      color: var(--dark-grey);
      padding: 10px;
@@ -68,12 +69,12 @@ header .filterSearchDiv i {
 
 @media (max-width: 700px) {
 
-     header button {
+.filterSearchDiv button {
 
           width: 25%;
      }
 
-     header input {
+.filterSearchDiv input {
 
           width: 75%;
      }

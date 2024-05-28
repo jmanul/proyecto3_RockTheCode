@@ -1,18 +1,36 @@
+import { createButton } from './src/components/button/button.js';
 import { createCard } from './src/components/card/card'
 import { createSearchBar } from './src/components/search_bar/search_bar';
 import './style.css'
 
 const header = document.querySelector('header');
+
 header.className = 'flex-container';
 const cardSection = document.querySelector('section.cards');
 
+
+
 createSearchBar(header, 'Buscar');
+const divSugest = document.createElement('div');
+divSugest.classList.add('divSugest', 'flex-container', 'estado-off');
+header.append(divSugest);
+createButton(divSugest, 'buttonButton', 'avion');
+createButton(divSugest, 'recomendacion', 'tren');
+createButton(divSugest, 'recomendacion', 'coche');
+
 
 const clave = "H2WzBZzDOduMSrBIGqBr8LAjQ19eAk_yY_yjnL6aDSY";
 
 let keyword = '';
 
 let page = 0;
+
+const searchSugest = () => {
+
+
+  filterSearchInput.value = buttonButton.value;
+  searchForName();
+ }
 
 
 const randomGalery = () => {
@@ -59,10 +77,16 @@ const searchImages = async () => {
     if (result.length === 0) {
 
       cardSection.innerHTML = `<div class="info">
-             <p>No hay resultados</p>
+             <p>No hay resultados, puedes probar con....</p>
           </div>`;
-
+      
+      divSugest.classList.remove('estado-off');
+            
       randomGalery();
+
+   ;
+
+     
 
     } else {
 
@@ -111,7 +135,12 @@ const searchForName = () => {
 }
 
 
+
+
 filterSearchButton.onclick = searchForName;
+
+
+ buttonButton.addEventListener('click', searchSugest);
 
 // filterSearchButton.addEventListener('click', (e) => {
 

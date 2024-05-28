@@ -20,4 +20,6 @@ export const createSearchBar = (site, placeholder) => {
      const filterSearchIcon = document.createElement('i');
      filterSearchIcon.className = 'bi bi-search';
      filterSearchButton.append(filterSearchIcon);
+
+   
 }

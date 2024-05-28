@@ -1,0 +1,36 @@
+
+
+.buttonDiv {
+     
+     width: 200px;
+     margin: 30px ;
+     height: 20px;
+     z-index: 3;
+}
+.buttonDiv button {
+
+     cursor: pointer;
+     color: var(--white);
+     border: 2px solid var(--light-red);
+   
+     background: var(--dark);
+     border-radius: 25px;
+     height: 40px;
+     width: 100%;
+     transition: .3s;
+     font-weight: 600;
+     font-family: var(--texto);
+     font-size: medium;
+
+     &:hover {
+
+          background-color: var(--blue-grey);
+
+     }
+
+     &:hover p {
+
+          color: var(--dark);
+     }
+
+}
