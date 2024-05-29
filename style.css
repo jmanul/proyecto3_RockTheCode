@@ -74,6 +74,11 @@ header {
 
 }
 
+main {
+
+     position: relative;
+}
+
 .divSugest {
      z-index: 1;
      position: absolute;
@@ -85,6 +90,18 @@ header {
      margin-bottom: 100px;
      background-color: var(--dark);
      border-bottom: 2px solid var(--light-dark);
+}
+
+.divResearch{
+
+ width: 100%;
+ height: auto;
+ 
+ padding-bottom: 50px;
+ position: absolute;
+ bottom: -50px;
+ z-index: 1;
+
 }
 
 .estado-off {

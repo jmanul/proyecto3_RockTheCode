@@ -1,22 +1,39 @@
 import { createButton } from './src/components/button/button.js';
-import { createCard } from './src/components/card/card'
-import { createSearchBar } from './src/components/search_bar/search_bar';
+import { createCard } from './src/components/card/card.js'
+import { createSearchBar } from './src/components/search_bar/search_bar.js';
 import './style.css'
 
 const header = document.querySelector('header');
-
+const main = document.querySelector('main');
 header.className = 'flex-container';
 const cardSection = document.querySelector('section.cards');
 
-
+const listKeywordsSugest = ['coches', 'motos', 'bicicletas', 'patines', 'paisajes', 'trenes', 'aviones', 'teclados', 'pajaros',];
 
 createSearchBar(header, 'Buscar');
+
+
+const randomSugestKeyword = (item) => {
+
+  const randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)]; 
+    
+  item.innerText = randomSugest;
+  item.value = randomSugest;
+
+ };
+
 const divSugest = document.createElement('div');
 divSugest.classList.add('divSugest', 'flex-container', 'estado-off');
 header.append(divSugest);
-createButton(divSugest, 'buttonButton', 'avion');
-createButton(divSugest, 'recomendacion', 'tren');
-createButton(divSugest, 'recomendacion', 'coche');
+createButton(divSugest, 'sugestOne', '');
+createButton(divSugest, 'sugestTwo','');
+createButton(divSugest, 'sugestThree', '');
+
+const divResearch = document.createElement('div');
+divResearch.classList.add('divResearch', 'flex-container', 'estado-off');
+main.append(divResearch);
+
+createButton(divResearch, 'sugestOne', 'Mas resultados');
 
 
 const clave = "H2WzBZzDOduMSrBIGqBr8LAjQ19eAk_yY_yjnL6aDSY";
@@ -25,11 +42,12 @@ let keyword = '';
 
 let page = 0;
 
-const searchSugest = () => {
+const searchSugest = (id) => {
 
-
-  filterSearchInput.value = buttonButton.value;
+  filterSearchInput.value = id.value;
   searchForName();
+
+  divSugest.classList.add('estado-off');
  }
 
 
@@ -80,15 +98,21 @@ const searchImages = async () => {
              <p>No hay resultados, puedes probar con....</p>
           </div>`;
       
+    randomSugestKeyword(sugestOne);
+     randomSugestKeyword(sugestTwo);
+     randomSugestKeyword(sugestThree);
+      
       divSugest.classList.remove('estado-off');
             
-      randomGalery();
+     // randomGalery();
 
    ;
 
      
 
     } else {
+
+      divSugest.classList.add('estado-off');
 
       cardSection.innerHTML = '';
       for (let i = 0; i < result.length; i++) {
@@ -119,7 +143,7 @@ const searchForName = () => {
              <p>Escribe lo que deseas buscar</p>
           </div>`;
     
-    randomGalery();
+    // randomGalery();
     return;
     
   } else {
@@ -138,9 +162,12 @@ const searchForName = () => {
 
 
 filterSearchButton.onclick = searchForName;
+sugestOne.onclick = () => searchSugest(sugestOne);
+sugestTwo.onclick = () => searchSugest(sugestTwo);
+sugestThree.onclick = () => searchSugest(sugestThree);
 
 
- buttonButton.addEventListener('click', searchSugest);
+
 
 // filterSearchButton.addEventListener('click', (e) => {
 
