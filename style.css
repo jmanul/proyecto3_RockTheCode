@@ -110,15 +110,20 @@ main {
 }
 
 .info {
+     /* background-color:var(--light-dark); */
      z-index: 2;
-     position: absolute;
+     position: fixed;
      left: 0;
+     top: 140px;
+     padding: 15px;
      text-align: center;
      width: 100%;
      cursor: pointer;
      font-size: 30px;
      font-weight: lighter;
      font-family: var(--titulo);
+
+   
      
 }
 

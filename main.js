@@ -4,37 +4,13 @@ import { createSearchBar } from './src/components/search_bar/search_bar.js';
 import './style.css'
 
 const header = document.querySelector('header');
-const main = document.querySelector('main');
 header.className = 'flex-container';
+const main = document.querySelector('main');
 const cardSection = document.querySelector('section.cards');
-
-const listKeywordsSugest = ['coches', 'motos', 'bicicletas', 'patines', 'paisajes', 'trenes', 'aviones', 'teclados', 'pajaros',];
 
 createSearchBar(header, 'Buscar');
 
-
-const randomSugestKeyword = (item) => {
-
-  const randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)]; 
-    
-  item.innerText = randomSugest;
-  item.value = randomSugest;
-
- };
-
-const divSugest = document.createElement('div');
-divSugest.classList.add('divSugest', 'flex-container', 'estado-off');
-header.append(divSugest);
-createButton(divSugest, 'sugestOne', '');
-createButton(divSugest, 'sugestTwo','');
-createButton(divSugest, 'sugestThree', '');
-
-const divResearch = document.createElement('div');
-divResearch.classList.add('divResearch', 'flex-container', 'estado-off');
-main.append(divResearch);
-
-createButton(divResearch, 'sugestOne', 'Mas resultados');
-
+//? valores por defecto necesarios pra realizar una peticion
 
 const clave = "H2WzBZzDOduMSrBIGqBr8LAjQ19eAk_yY_yjnL6aDSY";
 
@@ -42,13 +18,69 @@ let keyword = '';
 
 let page = 0;
 
+
+//? lista de sugerencias que se haran de forma aleatoria cuando no se encuentren resultados
+
+const listKeywordsSugest = ['coches', 'motos', 'bicicletas', 'patines', 'paisajes', 'trenes', 'aviones', 'teclados', 'pajaros', 'videojuegos'];
+
+
+//? funcion que escoge una palabra random de la lista de sugerencias y la asigna a un boton de sugerencias
+
+const randomSugestKeyword = (item) => {
+
+  let list = [];
+
+  const randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)]; 
+
+  if (list.length > 2) {
+
+    list.length = 0;
+
+  } else if (list.includes(randomSugest)){
+
+     randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)];  
+  } else {
+
+    list.push(randomSugest);
+
+    item.innerText = randomSugest;
+    item.value = randomSugest;
+
+  }
+
+ };
+
+//? creamos los botones que apareceran al realizar una busqueda sin resultados
+
+const divSugest = document.createElement('div');
+divSugest.classList.add('divSugest', 'flex-container', 'estado-off');
+header.append(divSugest);
+
+createButton(divSugest, 'sugestOne', '');
+createButton(divSugest, 'sugestTwo', '');
+createButton(divSugest, 'sugestThree', '');
+
+//? creamos el boton que nos permitira traernos mas imagenes y añadirlas a las que ya estan en pantalla
+
+const divResearch = document.createElement('div');
+divResearch.classList.add('divResearch', 'flex-container', 'estado-off');
+main.append(divResearch);
+
+createButton(divResearch, 'research', 'Mas resultados');
+
+
+//? funcion que lleva el valor de una opcion sujerida al input, para realizar la busqueda posteriormente
+
 const searchSugest = (id) => {
 
   filterSearchInput.value = id.value;
+
   searchForName();
 
   divSugest.classList.add('estado-off');
- }
+}
+ 
+//? funcion que genera una galeria random cuando no se ha hecho ninguna busqueda
 
 
 const randomGalery = () => {
@@ -66,10 +98,14 @@ const randomGalery = () => {
 
       }
 
+      divResearch.classList.remove('estado-off');
+
     })
     .catch((err) => console.log(err));
    
 };
+
+//? funcion que comprueba el estado inicial del input para generar una lista de imagenes aleatorias o basadas en una palabra introducida en el buscador
 
 const defaultInit = () => { 
 
@@ -77,13 +113,18 @@ const defaultInit = () => {
 
     randomGalery();
     return;
+
+  } else {
+
+    reSearchImages();
+
   }
 }
 
 defaultInit();
 
 
-
+//? funcion encargada de realizar una busqueda e imprimirla en pantalla
 
 const searchImages = async () => {
 
@@ -103,16 +144,15 @@ const searchImages = async () => {
      randomSugestKeyword(sugestThree);
       
       divSugest.classList.remove('estado-off');
+
+      divResearch.classList.add('estado-off');
             
-     // randomGalery();
-
-   ;
-
-     
 
     } else {
 
       divSugest.classList.add('estado-off');
+
+      divResearch.classList.remove('estado-off');
 
       cardSection.innerHTML = '';
       for (let i = 0; i < result.length; i++) {
@@ -128,12 +168,10 @@ const searchImages = async () => {
     console.log(error);
   }
 
-
- 
-  
-
-
 };
+
+
+//? funcion que activa el boton del input para iniciar una busqueda
 
 const searchForName = () => {
 
@@ -143,7 +181,8 @@ const searchForName = () => {
              <p>Escribe lo que deseas buscar</p>
           </div>`;
     
-    // randomGalery();
+    divResearch.classList.add('estado-off');
+    
     return;
     
   } else {
@@ -158,6 +197,34 @@ const searchForName = () => {
 
 }
 
+//? carga mas resultados de una busqueda
+
+const reSearchImages = async () => {
+
+  page++;
+
+  try {
+    const response = await fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${clave}`);
+    const res = await response.json();
+    const result = res.results;
+
+
+      for (let i = 0; i < result.length; i++) {
+        const item = result[i];
+
+        createCard(item.urls.small, item.alt_description, item.user.name, item.downloads, item.views, item.links.html, cardSection);
+
+      }
+    }
+
+    catch (error) {
+
+    console.log(error);
+  }
+
+};
+
+
 
 
 
@@ -165,6 +232,7 @@ filterSearchButton.onclick = searchForName;
 sugestOne.onclick = () => searchSugest(sugestOne);
 sugestTwo.onclick = () => searchSugest(sugestTwo);
 sugestThree.onclick = () => searchSugest(sugestThree);
+research.onclick = defaultInit;
 
 
 

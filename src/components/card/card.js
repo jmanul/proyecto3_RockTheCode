@@ -23,7 +23,7 @@ export const createCard = (url, alt, user, download, views, refer, site) => {
      cardDiv.append(cardTitle);
 
      const cardP = document.createElement('p');
-     cardP.innerHTML = `<span><i class="bi bi-download"></i> ${download} </span>   <span><i class="bi bi-eye"></i> ${views}</span>`;
+     cardP.innerHTML = `<span><i class="bi bi-download"></i> ${download} </span><span><i class="bi bi-eye"></i> ${views}</span>`;
      cardDiv.append(cardP);
   
 }

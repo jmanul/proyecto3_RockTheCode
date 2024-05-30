@@ -12,7 +12,7 @@
      cursor: pointer;
      color: var(--white);
      border: 2px solid var(--light-red);
-   
+  
      background: var(--dark);
      border-radius: 25px;
      height: 40px;
@@ -23,12 +23,14 @@
      font-size: medium;
 
      &:hover {
-
+          
+      
           background-color: var(--blue-grey);
+        
 
      }
 
-     &:hover p {
+     &:hover  {
 
           color: var(--dark);
      }
