@@ -4,7 +4,7 @@ import './button.css';
 export const createButton = (site, id, val) => {
 
      const buttonDiv = document.createElement('div');
-     buttonDiv.classList.add('buttonDiv');
+     buttonDiv.classList.add('buttonDiv', 'flex-container');
      site.append(buttonDiv);
 
      const buttonButton = document.createElement('button');
