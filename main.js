@@ -24,31 +24,54 @@ let page = 0;
 const listKeywordsSugest = ['coches', 'motos', 'bicicletas', 'patines', 'paisajes', 'trenes', 'aviones', 'teclados', 'pajaros', 'videojuegos'];
 
 
-//? funcion que escoge una palabra random de la lista de sugerencias y la asigna a un boton de sugerencias
+//? funcion que asigna una palabra a un boton de sugerencias
 
-const randomSugestKeyword = (item) => {
+let list = [];
 
-  let list = [];
+const assignRandomKeywords = (item) => {
 
-  const randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)]; 
+  let iterator = list[0];
 
-  if (list.length > 2) {
+  item.innerText = iterator;
+  item.value = iterator;
+  list.splice(iterator, 1);
+  console.log(list);
+}
 
-    list.length = 0;
+//? funcion que escoge 3 palabras random de la lista de sugerencias 
 
-  } else if (list.includes(randomSugest)){
+const randomSugestKeyword = () => {
 
-     randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)];  
-  } else {
 
-    list.push(randomSugest);
 
-    item.innerText = randomSugest;
-    item.value = randomSugest;
+  for (let i = 0; i < 3; i++) {
+
+
+
+    const randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)];
+
+    console.log(randomSugest);
+
+    if (list.includes(randomSugest)) {
+
+      i--;
+      
+
+    } else {
+
+      list.push(randomSugest);
+
+    
+    }
+    
+    console.log(list);
 
   }
 
- };
+   assignRandomKeywords(sugestOne);
+   assignRandomKeywords(sugestTwo);
+   assignRandomKeywords(sugestThree);
+};
 
 //? creamos los botones que apareceran al realizar una busqueda sin resultados
 
@@ -66,7 +89,14 @@ const divResearch = document.createElement('div');
 divResearch.classList.add('divResearch', 'flex-container', 'estado-off');
 main.append(divResearch);
 
+const pResearch = document.createElement('p');
+pResearch.innerText ='No hay más resultados';
+pResearch.classList.add('info-research', 'estado-off');
+main.append(pResearch);
+
 createButton(divResearch, 'research', 'Mas resultados');
+
+research.style = " color:red"
 
 
 //? funcion que lleva el valor de una opcion sujerida al input, para realizar la busqueda posteriormente
@@ -90,7 +120,7 @@ const randomGalery = () => {
     
     .catch((err) => console.log(err))
     .then((res) => {
-      console.log(res)
+    
       for (let i = 0; i < res.length; i++) {
         const item = res[i];
 
@@ -132,6 +162,7 @@ const searchImages = async () => {
     const response = await fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${clave}`);
     const res = await response.json();
     const result = res.results;
+    const totalPages = res.total_pages;
 
     if (result.length === 0) {
 
@@ -139,28 +170,33 @@ const searchImages = async () => {
              <p>No hay resultados, puedes probar con....</p>
           </div>`;
       
-    randomSugestKeyword(sugestOne);
-     randomSugestKeyword(sugestTwo);
-     randomSugestKeyword(sugestThree);
-      
+      randomSugestKeyword();
+
+            
       divSugest.classList.remove('estado-off');
 
       divResearch.classList.add('estado-off');
-            
+      
+      pResearch.classList.add('estado-off');
 
     } else {
 
       divSugest.classList.add('estado-off');
 
-      divResearch.classList.remove('estado-off');
+      
+      totalPages > 1 ? divResearch.classList.remove('estado-off') : divResearch.classList.add('estado-off') ; 
 
+ 
       cardSection.innerHTML = '';
       for (let i = 0; i < result.length; i++) {
         const item = result[i];
 
-        createCard(item.urls.small, item.alt_description, item.user.name, item.downloads, item.views, item.links.html, cardSection);
+
+        createCard(item.urls.small, item.alt_description, item.user.name, item.height, item.width, item.links.html, cardSection);
 
       }
+      
+      
     }
     
   } catch (error) {
@@ -182,10 +218,13 @@ const searchForName = () => {
           </div>`;
     
     divResearch.classList.add('estado-off');
+     pResearch.classList.add('estado-off');
     
     return;
     
   } else {
+
+    pResearch.classList.add('estado-off');
 
     page = 1;
     keyword = filterSearchInput.value;
@@ -207,12 +246,20 @@ const reSearchImages = async () => {
     const response = await fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${clave}`);
     const res = await response.json();
     const result = res.results;
+    const totalPages = res.total_pages;
 
-
+    if (totalPages == page) {
+        
+      divResearch.classList.add('estado-off');
+      pResearch.classList.remove('estado-off');
+       
+      
+      }
+      
       for (let i = 0; i < result.length; i++) {
         const item = result[i];
 
-        createCard(item.urls.small, item.alt_description, item.user.name, item.downloads, item.views, item.links.html, cardSection);
+        createCard(item.urls.small, item.alt_description, item.user.name, item.height, item.width, item.links.html, cardSection);
 
       }
     }
@@ -234,118 +281,13 @@ sugestTwo.onclick = () => searchSugest(sugestTwo);
 sugestThree.onclick = () => searchSugest(sugestThree);
 research.onclick = defaultInit;
 
-
-
-
-// filterSearchButton.addEventListener('click', (e) => {
-
-//   e.preventDefault();
-//   page = 1;
-
-//   searchImages();
-
-//   console.log(filterSearchInput.value);
-
-//  });
-
-// const res = [
-
-//   {
-//     user: {name : 'juanito ns dkdkj hiwh dkw dndwh juhds jhidhihhdi shihsihdis hidhiohDI HGDHGO DHUOIHG DGHJU FIH GUHGDUHU'},
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2024/03/31/06/16/bird-8666099_1280.jpg' }
-//   },  {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2024/04/01/17/55/straubing-8669480_640.jpg' }
-//   },  {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2021/01/06/12/14/church-5894267_640.jpg' }
-//   },  {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2021/07/24/07/23/chow-chow-6488846_640.jpg' }
-//   },  {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2023/06/16/15/14/sunset-8068208_640.jpg' }
-//   },  {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2024/03/21/14/29/chevrolet-8647804_640.jpg' }
-//   },
-  
-//   {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2023/02/08/18/36/tawny-owl-7777285_640.jpg' }
-//   }, {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2021/08/23/01/05/shoes-6566418_640.jpg' }
-//   }, {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2024/04/28/07/00/bird-8724916_640.jpg' }
-//   }, {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2023/05/29/00/24/blue-tit-8024809_640.jpg' }
-//   }, {
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2021/09/29/22/59/viola-6668608_640.jpg' }
-//   },{
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2024/04/25/06/50/banana-8719086_640.jpg' }
-//   },{
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2023/05/19/17/18/rose-beetle-8004990_640.jpg' }
-//   },{
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2022/01/29/09/01/bird-6976834_640.jpg' }
-//   },{
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2024/04/18/19/14/monkey-8704855_640.jpg' }
-//   },{
-//     user: { name: 'juanito' },
-//     icon: 'bi bi-facebook',
-//     urls: { small: 'https://cdn.pixabay.com/photo/2021/11/14/06/15/colored-pencils-6792979_640.jpg' }
-//   },
-
-// ]
-
-// const llamada = () => {
-
-//   console.log(res)
-//   for (let i = 0; i < res.length; i++) {
-//     const item = res[i];
-       
-//     createCard(item.urls.small, item.user.name, cardSection);
-
-
-//   }
-// }
-
-// llamada();
-
-// fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${clave}`).then((res) => res.json())
-//   .then((res) => {
-
-//     console.log(res)
-//     for (let i = 0; i < res.length; i++) {
-//       const url = res[i];
-
-
-//       createCard(res[0].urls.small, cardSection);
-//     }
-//   });
-   
+const footer = document.createElement('footer');
+document.body.append(footer);
+footer.classList.add('flex-container');
+const footerMaking = document.createElement('div');
+footerMaking.classList.add('flex-container', 'making');
+footer.append(footerMaking);
+footerMaking.innerHTML = `<span class="flex-container"><strong>Hecho por José Manuel Sánchez</strong><div class="pasttri-logo"><img src="https://res.cloudinary.com/dn6utw1rl/image/upload/v1710357027/pasttri_gstn60.webp" alt="logo pasttri"></div></span>`;
 
 
 

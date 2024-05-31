@@ -77,6 +77,7 @@ header {
 main {
 
      position: relative;
+     min-height: 100vh;
 }
 
 .divSugest {
@@ -92,17 +93,21 @@ main {
      border-bottom: 2px solid var(--light-dark);
 }
 
-.divResearch{
+.divResearch {
 
  width: 100%;
  height: auto;
- 
+ color: var(--blue-grey);
+background-color: var(--dark);
  padding-bottom: 50px;
  position: absolute;
  bottom: -50px;
  z-index: 1;
 
+ 
+
 }
+
 
 .estado-off {
 
@@ -110,20 +115,34 @@ main {
 }
 
 .info {
-     /* background-color:var(--light-dark); */
-     z-index: 2;
+ 
+     z-index: 1;
      position: fixed;
      left: 0;
      top: 140px;
      padding: 15px;
      text-align: center;
      width: 100%;
-     cursor: pointer;
      font-size: 30px;
      font-weight: lighter;
      font-family: var(--titulo);
 
    
+     
+}
+
+.info-research {
+
+     width: 100%;
+     height: auto;
+     text-align: center;
+     font-size: 30px;
+          font-weight: lighter;
+          font-family: var(--titulo);
+
+          padding-bottom: 100px;
+
+        
      
 }
 
@@ -143,7 +162,42 @@ main {
 
 }
 
+footer {
+     
+     
+     margin-top: 100px;
+     width: 100%;
+     height: auto;
 
+  
+}
+
+.making {
+
+
+     width: 100%;
+     height: 50px;
+}
+
+.pasttri-logo {
+     
+     height: 40px;
+
+    
+
+}
+
+.pasttri-logo img {
+
+     height: 100%;
+}
+
+.making > span {
+
+     color: var(--dark-grey);
+     font-size:small;
+     font-family: var(--texto);
+}
 
 
 

@@ -10,7 +10,7 @@
 .buttonDiv button {
 
      cursor: pointer;
-     color: var(--white);
+     color: var(--blue-grey);
      border: 2px solid var(--light-red);
   
      background: var(--dark);
@@ -25,14 +25,14 @@
      &:hover {
           
       
-          background-color: var(--blue-grey);
+          background-color: var(--light-red);
         
 
      }
 
      &:hover  {
 
-          color: var(--dark);
+          color: var(--blue-grey);
      }
 
 }

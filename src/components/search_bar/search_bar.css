@@ -49,13 +49,13 @@
 
      &:hover {
 
-          background-color: var(--white);
+          background-color: var(--light-red);
 
      }
 
      &:hover i {
 
-          color: var(--dark);
+          color: var(--blue-grey);
      }
 
 }
@@ -78,6 +78,11 @@
 
           width: 75%;
      }
+}
+
+.filterSearchDiv {
+
+     width: 80%;
 }
 
 ;
