@@ -12,13 +12,15 @@
 :root {
 
      --white: rgb(243, 243, 243);
-     --light-red: rgb(219, 144, 156);
+     --light-red: hsl(350, 51%, 71%);
      --red: rgb(230, 0, 35);
      --dark: rgb(15, 15, 15);
      --light-dark: rgb(42, 42, 42);
      --blue-grey: rgb(231, 233, 235);
      --dark-grey: rgb(155, 150, 150);
      --linear-gradient: (0deg, rgba(42, 42, 42, 1) 13%, rgba(17, 33, 33, 1) 56%);
+     --radial-gradiant:radial-gradient(circle, rgba(13, 1, 1, 0.4877976190476191) 30%, rgba(219, 144, 144, 1) 100%);
+     --radial-gradiant2:radial-gradient(circle, rgba(13, 1, 1, 0.4877976190476191) 0%, rgba(219, 144, 144, 1) 100%);
      --titulo: "Roboto",
           sans-serif;
      --texto: "Maven Pro",
@@ -71,6 +73,7 @@ header {
      border-bottom: var(--light-dark) 2px solid;
      z-index: 1;
      gap: 0;
+     
 
 }
 
@@ -210,6 +213,7 @@ footer {
           columns: auto 160px;
 
      }
+
 }
 
 ;

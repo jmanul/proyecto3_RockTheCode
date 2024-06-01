@@ -1,0 +1,49 @@
+
+.inicio {
+     cursor: pointer;
+     position: absolute;
+     left: 50px;
+     background:var(--radial-gradiant);
+     border: 3px solid var(--light-red);
+     width: 5rem;
+     height: 5rem;
+     border-radius: 100%;
+     transition: .4s;
+
+     &:hover {
+
+          background: var(--radial-gradiant2);
+     }
+
+     &:hover img {
+
+          border: 2px solid var(--light-red);
+     }
+
+}
+
+.inicio > img{
+     cursor: pointer;
+     width: 100%;
+     border-radius: 100px;
+     padding: 15px;
+     border: 2px solid var(--dark);
+
+}
+
+@media (max-width: 700px) {
+
+     .inicio {
+
+          left: 20px;
+          width: 4rem;
+          height: 4rem;
+          
+     }
+
+          .inicio>img {
+     
+               padding: 10px;
+     
+          }
+}

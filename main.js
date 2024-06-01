@@ -1,5 +1,7 @@
+
 import { createButton } from './src/components/button/button.js';
 import { createCard } from './src/components/card/card.js'
+import { createInicioButton } from './src/components/inicio_button/inicio_button.js';
 import { createSearchBar } from './src/components/search_bar/search_bar.js';
 import './style.css'
 
@@ -8,6 +10,8 @@ header.className = 'flex-container';
 const main = document.querySelector('main');
 const cardSection = document.querySelector('section.cards');
 
+
+createInicioButton(header);
 createSearchBar(header, 'Buscar');
 
 //? valores por defecto necesarios pra realizar una peticion
@@ -96,7 +100,7 @@ main.append(pResearch);
 
 createButton(divResearch, 'research', 'Mas resultados');
 
-research.style = " color:red"
+
 
 
 //? funcion que lleva el valor de una opcion sujerida al input, para realizar la busqueda posteriormente
@@ -271,6 +275,12 @@ const reSearchImages = async () => {
 
 };
 
+const reStart = () => {
+
+  filterSearchInput.value = '';
+  randomGalery();
+}
+
 
 
 
@@ -280,6 +290,7 @@ sugestOne.onclick = () => searchSugest(sugestOne);
 sugestTwo.onclick = () => searchSugest(sugestTwo);
 sugestThree.onclick = () => searchSugest(sugestThree);
 research.onclick = defaultInit;
+inicio.onclick = reStart;
 
 const footer = document.createElement('footer');
 document.body.append(footer);
