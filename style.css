@@ -6,6 +6,7 @@
      padding: 0;
      text-decoration: none;
      list-style: none;
+  
 
 }
 
@@ -161,6 +162,7 @@ background-color: var(--dark);
      padding-bottom: 100px;
      columns: 5 220px;
      column-gap: .7em;
+     scroll-snap-align: initial;
 
 
 }

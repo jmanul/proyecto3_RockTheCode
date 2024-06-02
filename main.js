@@ -22,6 +22,8 @@ let keyword = '';
 
 let page = 0;
 
+let randomfirst = false;
+
 
 //? lista de sugerencias que se haran de forma aleatoria cuando no se encuentren resultados
 
@@ -100,7 +102,9 @@ main.append(pResearch);
 
 createButton(divResearch, 'research', 'Mas resultados');
 
+//? funcion que lleva el scroll a top 0
 
+const upScroll = () => window.scrollTo(0,0);
 
 
 //? funcion que lleva el valor de una opcion sujerida al input, para realizar la busqueda posteriormente
@@ -119,6 +123,7 @@ const searchSugest = (id) => {
 
 const randomGalery = () => {
 
+  if (randomfirst === false) { upScroll(); };
 
   fetch(`https://api.unsplash.com/photos/random?count=30&client_id=${clave}`).then((res) => res.json())
     
@@ -132,6 +137,8 @@ const randomGalery = () => {
 
       }
 
+    
+      randomfirst = true;
       divResearch.classList.remove('estado-off');
 
     })
@@ -144,8 +151,10 @@ const randomGalery = () => {
 const defaultInit = () => { 
 
   if (filterSearchInput.value === '') {
-
+    
+  
     randomGalery();
+  
     return;
 
   } else {
@@ -234,6 +243,7 @@ const searchForName = () => {
     keyword = filterSearchInput.value;
 
     searchImages();
+    upScroll();
 
   }
 
@@ -275,8 +285,12 @@ const reSearchImages = async () => {
 
 };
 
-const reStart = () => {
+//? reinicio de aplicacion
 
+const reStart = () => {
+  
+  randomfirst = false;
+  cardSection.innerHTML = '';
   filterSearchInput.value = '';
   randomGalery();
 }
@@ -290,7 +304,11 @@ sugestOne.onclick = () => searchSugest(sugestOne);
 sugestTwo.onclick = () => searchSugest(sugestTwo);
 sugestThree.onclick = () => searchSugest(sugestThree);
 research.onclick = defaultInit;
-inicio.onclick = reStart;
+// inicio.onclick = reStart;
+
+inicio.addEventListener('click', reStart);
+
+//? mensaje de fin de pagina (footer)
 
 const footer = document.createElement('footer');
 document.body.append(footer);
