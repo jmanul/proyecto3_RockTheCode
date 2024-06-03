@@ -42,7 +42,7 @@ const assignRandomKeywords = (item) => {
   item.innerText = iterator;
   item.value = iterator;
   list.splice(iterator, 1);
-  console.log(list);
+
 }
 
 //? funcion que escoge 3 palabras random de la lista de sugerencias 
@@ -103,7 +103,7 @@ createButton(divResearch, 'research', 'Mas resultados');
 const upScroll = () => window.scrollTo(0, 0);
 
 
-//? funcion que lleva el valor de una opcion sujerida al input, para realizar la busqueda posteriormente
+//? funcion que lleva el valor de una opcion sugerida al input, para realizar la busqueda posteriormente
 
 const searchSugest = (id) => {
 
@@ -117,11 +117,11 @@ const searchSugest = (id) => {
 //? imprime las cards
 
 const printCards = (result) => {
-
+  
   for (let i = 0; i < result.length; i++) {
     const item = result[i];
-
-    createCard(item.urls.small, item.alt_description, item.user.name, item.downloads, item.views, item.links.html, cardSection);
+   
+    createCard(item.urls.small, item.alt_description, item.user.name, item.width, item.height, item.links.html, cardSection);
 
 
   }
@@ -182,6 +182,8 @@ const searchImages = async () => {
     const result = res.results;
     const totalPages = res.total_pages;
 
+   
+
     if (result.length === 0) {
 
       cardSection.innerHTML = `<div class="info">
@@ -206,7 +208,7 @@ const searchImages = async () => {
 
 
       cardSection.innerHTML = '';
-
+      
       printCards(result);
 
     }
@@ -260,7 +262,7 @@ const reSearchImages = async () => {
     const res = await response.json();
     const result = res.results;
     const totalPages = res.total_pages;
-
+  
     if (totalPages == page) {
 
       divResearch.classList.add('estado-off');
@@ -269,7 +271,7 @@ const reSearchImages = async () => {
 
     }
 
-
+    
     printCards(result);
 
   }
