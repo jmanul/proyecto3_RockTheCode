@@ -11,7 +11,8 @@ const main = document.querySelector('main');
 const cardSection = document.querySelector('section.cards');
 
 
-createInicioButton(header);
+createInicioButton(header, '/pinterest-svgrepo-com.svg', 'inicio');
+// createInicioButton(header, 'https://res.cloudinary.com/dn6utw1rl/image/upload/v1710357027/pasttri_gstn60.webp', 'user');
 createSearchBar(header, 'Buscar');
 
 //? valores por defecto necesarios pra realizar una peticion
@@ -56,27 +57,22 @@ const randomSugestKeyword = () => {
 
     const randomSugest = listKeywordsSugest[Math.floor(Math.random() * listKeywordsSugest.length)];
 
-    console.log(randomSugest);
-
     if (list.includes(randomSugest)) {
 
       i--;
-      
+
 
     } else {
 
       list.push(randomSugest);
 
-    
     }
-    
-    console.log(list);
 
   }
 
-   assignRandomKeywords(sugestOne);
-   assignRandomKeywords(sugestTwo);
-   assignRandomKeywords(sugestThree);
+  assignRandomKeywords(sugestOne);
+  assignRandomKeywords(sugestTwo);
+  assignRandomKeywords(sugestThree);
 };
 
 //? creamos los botones que apareceran al realizar una busqueda sin resultados
@@ -96,7 +92,7 @@ divResearch.classList.add('divResearch', 'flex-container', 'estado-off');
 main.append(divResearch);
 
 const pResearch = document.createElement('p');
-pResearch.innerText ='No hay más resultados';
+pResearch.innerText = 'No hay más resultados';
 pResearch.classList.add('info-research', 'estado-off');
 main.append(pResearch);
 
@@ -104,7 +100,7 @@ createButton(divResearch, 'research', 'Mas resultados');
 
 //? funcion que lleva el scroll a top 0
 
-const upScroll = () => window.scrollTo(0,0);
+const upScroll = () => window.scrollTo(0, 0);
 
 
 //? funcion que lleva el valor de una opcion sujerida al input, para realizar la busqueda posteriormente
@@ -117,7 +113,20 @@ const searchSugest = (id) => {
 
   divSugest.classList.add('estado-off');
 }
- 
+
+//? imprime las cards
+
+const printCards = (result) => {
+
+  for (let i = 0; i < result.length; i++) {
+    const item = result[i];
+
+    createCard(item.urls.small, item.alt_description, item.user.name, item.downloads, item.views, item.links.html, cardSection);
+
+
+  }
+}
+
 //? funcion que genera una galeria random cuando no se ha hecho ninguna busqueda
 
 
@@ -125,36 +134,32 @@ const randomGalery = () => {
 
   if (randomfirst === false) { upScroll(); };
 
-  fetch(`https://api.unsplash.com/photos/random?count=30&client_id=${clave}`).then((res) => res.json())
-    
+  fetch(`https://api.unsplash.com/photos/random?count=30&client_id=${clave}`).then((result) => result.json())
+
     .catch((err) => console.log(err))
-    .then((res) => {
-    
-      for (let i = 0; i < res.length; i++) {
-        const item = res[i];
+    .then((result) => {
 
-        createCard(item.urls.small, item.alt_description, item.user.name, item.downloads, item.views, item.links.html, cardSection);
 
-      }
+      printCards(result);
 
-    
+
       randomfirst = true;
       divResearch.classList.remove('estado-off');
 
     })
     .catch((err) => console.log(err));
-   
+
 };
 
 //? funcion que comprueba el estado inicial del input para generar una lista de imagenes aleatorias o basadas en una palabra introducida en el buscador
 
-const defaultInit = () => { 
+const defaultInit = () => {
 
   if (filterSearchInput.value === '') {
-    
-  
+
+
     randomGalery();
-  
+
     return;
 
   } else {
@@ -182,38 +187,32 @@ const searchImages = async () => {
       cardSection.innerHTML = `<div class="info">
              <p>No hay resultados, puedes probar con....</p>
           </div>`;
-      
+
       randomSugestKeyword();
 
-            
+
       divSugest.classList.remove('estado-off');
 
       divResearch.classList.add('estado-off');
-      
+
       pResearch.classList.add('estado-off');
 
     } else {
 
       divSugest.classList.add('estado-off');
 
-      
-      totalPages > 1 ? divResearch.classList.remove('estado-off') : divResearch.classList.add('estado-off') ; 
 
- 
+      totalPages > 1 ? divResearch.classList.remove('estado-off') : divResearch.classList.add('estado-off');
+
+
       cardSection.innerHTML = '';
-      for (let i = 0; i < result.length; i++) {
-        const item = result[i];
 
+      printCards(result);
 
-        createCard(item.urls.small, item.alt_description, item.user.name, item.height, item.width, item.links.html, cardSection);
-
-      }
-      
-      
     }
-    
+
   } catch (error) {
-    
+
     console.log(error);
   }
 
@@ -225,16 +224,16 @@ const searchImages = async () => {
 const searchForName = () => {
 
   if (filterSearchInput.value === '') {
-    
+
     cardSection.innerHTML = `<div class="info">
              <p>Escribe lo que deseas buscar</p>
           </div>`;
-    
+
     divResearch.classList.add('estado-off');
-     pResearch.classList.add('estado-off');
-    
+    pResearch.classList.add('estado-off');
+
     return;
-    
+
   } else {
 
     pResearch.classList.add('estado-off');
@@ -263,22 +262,19 @@ const reSearchImages = async () => {
     const totalPages = res.total_pages;
 
     if (totalPages == page) {
-        
+
       divResearch.classList.add('estado-off');
       pResearch.classList.remove('estado-off');
-       
-      
-      }
-      
-      for (let i = 0; i < result.length; i++) {
-        const item = result[i];
 
-        createCard(item.urls.small, item.alt_description, item.user.name, item.height, item.width, item.links.html, cardSection);
 
-      }
     }
 
-    catch (error) {
+
+    printCards(result);
+
+  }
+
+  catch (error) {
 
     console.log(error);
   }
@@ -288,7 +284,7 @@ const reSearchImages = async () => {
 //? reinicio de aplicacion
 
 const reStart = () => {
-  
+
   randomfirst = false;
   cardSection.innerHTML = '';
   filterSearchInput.value = '';
