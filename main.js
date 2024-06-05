@@ -298,6 +298,7 @@ const reStart = () => {
 
 
 filterSearchButton.onclick = searchForName;
+filterSearchInput.addEventListener('keydown',(event) => {if (event.key === 'Enter'){searchForName()}});
 sugestOne.onclick = () => searchSugest(sugestOne);
 sugestTwo.onclick = () => searchSugest(sugestTwo);
 sugestThree.onclick = () => searchSugest(sugestThree);

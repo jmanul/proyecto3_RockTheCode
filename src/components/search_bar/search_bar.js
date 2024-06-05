@@ -11,7 +11,7 @@ export const createSearchBar = (site, placeholder) => {
      filterSearchInput.type = 'search';
      filterSearchInput.placeholder = placeholder;
      filterSearchDiv.append(filterSearchInput);
-
+  
      const filterSearchButton = document.createElement('button');
      filterSearchButton.id = 'filterSearchButton';
      filterSearchButton.type = 'submit';
